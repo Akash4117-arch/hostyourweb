@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>hostyourweb cPanel Dashboard</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+  /* Reset and base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f6f8fa; color: #333;
+    height: 100vh; display: flex; overflow: hidden;
+  }
+  h1,h2,h3,p,label {
+    margin: 0;
+  }
+
+  /* Sidebar */
+  nav.sidebar {
+    width: 250px; background: #24292e; color: #fff;
+    display: flex; flex-direction: column;
+    padding-top: 20px;
+    flex-shrink: 0;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  }
+  nav.sidebar h1 {
+    font-size: 24px; text-align: center; margin-bottom: 30px; letter-spacing: 1px;
+    font-weight: 700; user-select: none;
+    color: #58a6ff; /* Lighter blue for heading */
+  }
+  nav.sidebar ul {
+    list-style: none; padding: 0; margin: 0; flex-grow: 1;
+    overflow-y: auto;
+  }
+  nav.sidebar ul li {
+    padding: 14px 20px; cursor: pointer;
+    font-weight: 600;
+    border-left: 4px solid transparent;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+    user-select: none;
+    display: flex;
+    align-items: center;
+  }
+  nav.sidebar ul li i {
+    margin-right: 12px;
+    font-size: 18px;
+    color: #aebacd; /* Icon color */
+  }
+  nav.sidebar ul li:hover {
+    background: #2f363d; /* Darker hover */
+    border-left: 4px solid #58a6ff;
+    transform: translateX(5px);
+  }
+  nav.sidebar ul li.active {
+    background: #0366d6;
+    border-left: 4px solid #58a6ff;
+    box-shadow: inset 3px 0 8px rgba(0,0,0,0.3);
+  }
+  nav.sidebar ul li.active i {
+    color: #fff; /* Active icon color */
+  }
+
+  /* Main panel */
+  main.content {
+    flex-grow: 1; padding: 30px; overflow-y: auto;
+    background: #f6f8fa;
+  }
+  main.content h2 {
+    font-size: 28px;
+    color: #24292e;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+  }
+  main.content section {
+    display: none;
+    animation: fadeIn 0.5s ease-out;
+  }
+  main.content section.active {
+    display: block;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* File Manager */
+  #file-manager {
+    display: flex; height: 450px; border: 1px solid #e1e4e8; border-radius: 8px; overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  #file-tree {
+    width: 28%; background: #fff; border-right: 1px solid #e1e4e8; padding: 15px;
+    overflow-y: auto; font-size: 15px;
+    position: relative;
+  }
+  #file-tree ul {
+    list-style: none; padding-left: 0;
+  }
+  #file-tree li {
+    cursor: pointer; user-select: none; padding: 8px 10px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  #file-tree li:hover {
+    background: #eef6fd;
+    color: #0366d6;
+  }
+  #file-tree li.selected {
+    background: #0366d6; color: white;
+  }
+  #file-tree li i {
+    margin-right: 8px;
+    color: #6a737d; /* Default icon color */
+  }
+  #file-tree li.selected i {
+    color: #fff; /* Selected icon color */
+  }
+  #file-tree li ul {
+    padding-left: 20px;
+  }
+  #file-tree button.primary-btn {
+    width: calc(100% - 30px);
+    position: sticky;
+    bottom: 15px;
+    margin-top: 15px;
+    left: 15px;
+    right: 15px;
+  }
+  #file-content {
+    flex-grow: 1; padding: 15px;
+    display: flex; flex-direction: column;
+    background: #fff;
+  }
+  #file-content input[type=text] {
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    background: #fdfdfd;
+  }
+  #file-content textarea {
+    flex-grow: 1;
+    width: 100%;
+    resize: vertical; /* Allow vertical resize */
+    font-family: 'Cascadia Code', 'Fira Code', monospace; /* Modern monospace font */
+    font-size: 14px;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 10px;
+    background: #fdfdfd;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    transition: border-color 0.2s ease;
+  }
+  #file-content textarea:focus {
+    border-color: #0366d6;
+    outline: none;
+  }
+  #file-content button {
+    margin-top: 15px;
+    width: 120px;
+    padding: 10px 15px;
+    background: #0366d6;
+    border: none; border-radius: 6px;
+    color: white; font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+  }
+  #file-content button:hover {
+    background: #024ea2;
+    transform: translateY(-2px);
+  }
+  #file-save-info {
+    font-size: 14px;
+    margin-top: 10px;
+    color: green;
+    font-weight: bold;
+    animation: slideInLeft 0.3s ease-out;
+  }
+
+  /* Added style for Run button */
+  #run-file-btn {
+    margin-left: 15px;
+    background: #28a745;
+    width: 120px;
+  }
+  #run-file-btn:hover {
+    background: #1e7e34;
+  }
+
+  /* File Upload styles */
+  #upload-form {
+    max-width: 600px;
+    margin-top: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  #upload-form label {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  #upload-form input[type=file] {
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 6px;
+    width: 100%;
+    background: #fdfdfd;
+    cursor: pointer;
+  }
+  #upload-info {
+    margin-top: 10px;
+    color: green;
+    font-weight: bold;
+    animation: slideInLeft 0.3s ease-out;
+  }
+
+
+  /* Form styles (general) */
+  form {
+    max-width: 700px;
+    margin-top: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: #444;
+  }
+  input[type=text], input[type=email], input[type=password], input[type=url], select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #e1e4e8;
+    font-size: 15px;
+    background: #fdfdfd;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  input[type=text]:focus, input[type=email]:focus, input[type=password]:focus, input[type=url]:focus, select:focus, textarea:focus {
+    border-color: #0366d6;
+    box-shadow: 0 0 0 3px rgba(3,102,214,0.25);
+    outline: none;
+  }
+  button.primary-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-weight: 600;
+    margin-top: 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  button.primary-btn i {
+    font-size: 16px;
+  }
+  button.primary-btn:hover {
+    background: #1e7e34;
+    transform: translateY(-2px);
+  }
+  .info-box {
+    font-size: 14px;
+    background: #e1ecf6; /* Lighter blue */
+    border-radius: 6px;
+    padding: 15px;
+    margin: 20px 0;
+    color: #0366d6;
+    border-left: 4px solid #0366d6;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+  }
+
+  /* Table styles */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 15px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  table th, table td {
+    border: 1px solid #eee;
+    padding: 12px 15px;
+    text-align: left;
+  }
+  table th {
+    background: #f0f3f7;
+    font-weight: 700;
+    color: #555;
+  }
+  table tr:nth-child(even) {
+    background: #f9fbfd;
+  }
+  table tr:hover {
+    background: #eef6fd;
+  }
+  button.danger-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  button.danger-btn i {
+    font-size: 14px;
+  }
+  button.danger-btn:hover {
+    background: #a71d2a;
+    transform: translateY(-1px);
+  }
+  button.small-btn {
+    padding: 6px 10px;
+    font-size: 13px;
+    margin-left: 6px;
+  }
+
+  /* Toggle switches */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+    margin: 5px 0;
+  }
+  .switch input { display:none; }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    background-color: #ccc;
+    border-radius: 34px;
+    top: 0; left: 0; right: 0; bottom: 0;
+    transition: .4s;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px; width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  input:checked + .slider {
+    background-color: #28a745;
+  }
+  input:checked + .slider:before {
+    transform: translateX(22px);
+  }
+
+  /* Metrics charts simple bars */
+  .metric {
+    background: #0366d6;
+    color: white;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  .metric i {
+    font-size: 28px;
+    margin-right: 15px;
+    opacity: 0.8;
+  }
+  .metric span {
+    font-size: 22px;
+  }
+  .bar-chart {
+    height: 120px;
+    width: 100%;
+    background: #e1e4e8;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px;
+    margin-bottom: 30px;
+    box-shadow: inset 0 1px 5px rgba(0,0,0,0.1);
+  }
+  .bar {
+    flex: 1;
+    margin: 0 3px;
+    background: #0366d6;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.4s ease-out;
+    position: relative;
+  }
+  .bar:hover {
+    opacity: 0.9;
+  }
+  .bar-label {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 8px;
+    color: #666;
+  }
+  /* Specific bar colors */
+  .bar.cpu { background: #0366d6; } /* Blue */
+  .bar.mem { background: #28a745; } /* Green */
+  .bar.disk { background: #6f42c1; } /* Purple */
+  .bar.net { background: #d73a49; } /* Red */
+  .bar.users { background: #ffac33; } /* Orange */
+
+  /* Specific section styles for better readability */
+  #mysql-tab form, #software-tab ul, #cloudflare-tab, #security-tab div, #cron-tab form, #email-tab form {
+    margin-bottom: 30px;
+  }
+  #software-list li {
+    padding: 12px 0;
+    border-bottom: 1px dashed #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #software-list li:last-child {
+    border-bottom: none;
+  }
+
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <h1>hostyourweb cPanel</h1>
+  <ul id="menu">
+    <li class="active" data-tab="file-manager-tab" tabindex="0"><i class="fas fa-folder"></i> Manage Site Files</li>
+    <li data-tab="upload-tab" tabindex="0"><i class="fas fa-upload"></i> File Upload</li>
+    <li data-tab="mysql-tab" tabindex="0"><i class="fas fa-database"></i> MySQL Databases</li>
+    <li data-tab="software-tab" tabindex="0"><i class="fas fa-cogs"></i> Install Software</li>
+    <li data-tab="cloudflare-tab" tabindex="0"><i class="fas fa-cloud"></i> Enable Cloudflare</li>
+    <li data-tab="metrics-tab" tabindex="0"><i class="fas fa-chart-bar"></i> Site Metrics</li>
+    <li data-tab="security-tab" tabindex="0"><i class="fas fa-shield-alt"></i> Security Settings</li>
+    <li data-tab="email-tab" tabindex="0"><i class="fas fa-envelope"></i> Email Accounts</li>
+    <li data-tab="live-website-tab" tabindex="0"><i class="fas fa-globe"></i> Live Website</li>
+  </ul>
+</nav>
+
+<main class="content">
+
+  <section id="file-manager-tab" class="active" aria-label="Manage Site Files">
+    <h2>Manage and Edit Site Files</h2>
+    <div id="file-manager" role="region" aria-live="polite">
+      <div id="file-tree" aria-label="File Tree">
+        <ul id="file-list">
+          </ul>
+        <button id="add-file-btn" class="primary-btn" title="Add New File"><i class="fas fa-plus"></i> New File</button>
+      </div>
+      <div id="file-content" aria-label="File Content Editor">
+        <input type="text" id="filename-input" placeholder="Filename" aria-label="Filename" />
+        <textarea id="file-textarea" spellcheck="false" aria-label="File content editor"></textarea>
+        <div style="display:flex; gap: 1rem;">
+          <button id="save-file-btn" class="primary-btn" aria-live="polite"><i class="fas fa-save"></i> Save</button>
+          <button id="run-file-btn" class="primary-btn" aria-live="polite"><i class="fas fa-play"></i> Run</button>
+        </div>
+        <p id="file-save-info" aria-live="assertive"></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="upload-tab" aria-label="File Upload">
+    <h2>Upload Files</h2>
+  <form id="upload-form" action="upload" method="post" enctype="multipart/form-data">
+      <label for="file-upload">Select File:</label>
+      <input type="file" id="file-upload" required />
+      <button type="submit" class="primary-btn"><i class="fas fa-upload"></i> Upload</button>
+    </form>
+    <p id="upload-info" aria-live="assertive"></p>
+  </section>
+
+  <section id="mysql-tab" aria-label="MySQL Databases for WordPress">
+    <h2>MySQL Databases Management</h2>
+    <form id="mysql-form" aria-label="Create MySQL database">
+      <label for="db-name">New Database Name:</label>
+      <input type="text" id="db-name" placeholder="Enter database name" required />
+      <button type="submit" class="primary-btn"><i class="fas fa-plus-circle"></i> Create Database</button>
+    </form>
+    <table aria-label="MySQL databases list" id="mysql-table">
+      <thead>
+        <tr><th>Database Name</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        </tbody>
+    </table>
+    <p class="info-box"><i class="fas fa-info-circle"></i> This is a simulated interface. Actual database creation requires backend connection.</p>
+  </section>
+
+  <section id="software-tab" aria-label="Software Installation">
+    <h2>Install Software With a Few Clicks</h2>
+    <ul id="software-list" aria-live="polite">
+      </ul>
+    <p class="info-box"><i class="fas fa-info-circle"></i> Installation simulated. No real software is installed.</p>
+  </section>
+
+  <section id="cloudflare-tab" aria-label="Enable Cloudflare">
+    <h2>Enable Cloudflare</h2>
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <label class="switch" aria-label="Toggle Cloudflare">
+        <input type="checkbox" id="cloudflare-toggle" />
+        <span class="slider"></span>
+      </label>
+      <p id="cloudflare-status" style="font-weight: 600;"></p>
+    </div>
+    <p class="info-box"><i class="fas fa-info-circle"></i> This is a simulation. Actual enabling requires Cloudflare API integration.</p>
+  </section>
+
+  <section id="metrics-tab" aria-label="Site and Server Metrics">
+    <h2>Key Site and Server Metrics</h2>
+    <div class="metric" aria-label="CPU Usage"><i class="fas fa-microchip"></i> CPU Usage: <span id="cpu-usage">45%</span></div>
+    <div class="bar-chart" aria-label="CPU usage chart">
+      <div class="bar cpu" style="height: 45%;"></div>
+      <div class="bar cpu" style="height: 30%;"></div>
+      <div class="bar cpu" style="height: 60%;"></div>
+      <div class="bar cpu" style="height: 15%;"></div>
+      <div class="bar cpu" style="height: 80%;"></div>
+    </div>
+    <div class="metric" aria-label="Memory Usage"><i class="fas fa-memory"></i> Memory Usage: <span id="memory-usage">68%</span></div>
+    <div class="bar-chart" aria-label="Memory usage chart">
+      <div class="bar mem" style="height: 68%;"></div>
+      <div class="bar mem" style="height: 50%;"></div>
+      <div class="bar mem" style="height: 42%;"></div>
+      <div class="bar mem" style="height: 35%;"></div>
+      <div class="bar mem" style="height: 25%;"></div>
+    </div>
+    <p class="info-box"><i class="fas fa-info-circle"></i> Metrics are dummy data for demonstration purposes.</p>
+  </section>
+
+  <section id="security-tab" aria-label="Extra Security Settings">
+    <h2>Configure Extra Security Layers</h2>
+    <div style="max-width: 400px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px;">
+      <label class="switch" aria-label="Toggle Two Factor Authentication">
+        <input type="checkbox" id="security-2fa" />
+        <span class="slider"></span>
+      </label>
+      <span style="font-weight: 600;">Two Factor Authentication (2FA)</span>
+    </div>
+    <div style="max-width: 400px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px;">
+      <label class="switch" aria-label="Toggle Firewall">
+        <input type="checkbox" id="security-firewall" />
+        <span class="slider"></span>
+      </label>
+      <span style="font-weight: 600;">Firewall Enabled</span>
+    </div>
+    <div style="max-width: 400px; display: flex; align-items: center; gap: 15px;">
+      <label class="switch" aria-label="Toggle Intrusion Detection">
+        <input type="checkbox" id="security-ids" />
+        <span class="slider"></span>
+      </label>
+      <span style="font-weight: 600;">Intrusion Detection System</span>
+    </div>
+  </section>
+
+  <section id="email-tab" aria-label="Email Accounts Management">
+    <h2>Create and Manage Email Accounts</h2>
+    <form id="email-form" aria-label="Add email account">
+      <label for="email-address">Email Address:</label>
+      <input type="email" id="email-address" placeholder="name@example.com" required />
+      <label for="email-password">Password:</label>
+      <input type="password" id="email-password" placeholder="Password" required />
+      <button type="submit" class="primary-btn"><i class="fas fa-plus-circle"></i> Create Account</button>
+    </form>
+    <table aria-label="Email accounts list" id="email-table">
+      <thead><tr><th>Email Address</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <p class="info-box"><i class="fas fa-info-circle"></i> Email accounts are simulated only.</p>
+  </section>
+
+  <section id="live-website-tab" aria-label="Live Website">
+    <h2>Live Website Access</h2>
+    <form id="live-website-form" aria-label="Set live website URL">
+      <label for="live-website-url">Live Website URL:</label>
+      <input type="url" id="live-website-url" placeholder="https://example.com" required />
+      <button type="submit" class="primary-btn"><i class="fas fa-external-link-alt"></i> Open Website</button>
+    </form>
+    <p id="live-website-info" style="margin-top: 10px; color: green; font-weight: 600;"></p>
+  </section>
+</main>
+
+<script>
+  // Sidebar navigation
+  const menuItems = document.querySelectorAll('nav.sidebar ul li');
+  const sections = document.querySelectorAll('main.content section');
+
+  function activateTab(tabName) {
+    sections.forEach(s => {
+      s.classList.toggle('active', s.id === tabName);
+    });
+    menuItems.forEach(m => {
+      m.classList.toggle('active', m.dataset.tab === tabName);
+    });
+  }
+  menuItems.forEach(item => {
+    item.addEventListener('click', () => activateTab(item.dataset.tab));
+    item.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        activateTab(item.dataset.tab);
+      }
+    });
+  });
+
+  // FILE MANAGER: Simple file system simulated with localStorage with folder support and delete buttons
+  const fileListEl = document.getElementById('file-list');
+  const fileTextArea = document.getElementById('file-textarea');
+  const filenameInput = document.getElementById('filename-input');
+  const saveFileBtn = document.getElementById('save-file-btn');
+  const runFileBtn = document.getElementById('run-file-btn');
+  const addFileBtn = document.getElementById('add-file-btn');
+  const fileSaveInfo = document.getElementById('file-save-info');
+
+  let currentFile = null;
+  let files = {};
+
+  // Combine normal files and uploaded files into one object
+  function loadFiles() {
+    try {
+      const stored = localStorage.getItem('cpanel_files');
+      const uploaded = localStorage.getItem('cpanel_uploaded_files');
+      const normFiles = stored ? JSON.parse(stored) : {
+        'index.html': '<!DOCTYPE html>\n<html>\n<head>\n  <title>Home</title>\n</head>\n<body>\n  <h1>Welcome!</h1>\n</body>\n</html>',
+        'style.css': 'body {\n  font-family: Arial, sans-serif;\n  color: #333;\n}',
+        'script.js': 'console.log("Hello from script.js");\n\n// This is a sample JavaScript file.'
+      };
+      const uploadedFiles = uploaded ? JSON.parse(uploaded) : {};
+      // Merge uploaded files inside a "uploads/" folder prepended
+      files = {...normFiles};
+      for (const filename in uploadedFiles) {
+        files["uploads/" + filename] = uploadedFiles[filename];
+      }
+    } catch {
+      files = {};
+    }
+  }
+  function saveFiles() {
+    // Separate uploaded files and normal files
+    const normalFiles = {};
+    const uploadedFiles = {};
+    for (const filename in files) {
+      if (filename.startsWith("uploads/")) {
+        const name = filename.slice(8);
+        uploadedFiles[name] = files[filename];
+      } else {
+        normalFiles[filename] = files[filename];
+      }
+    }
+    localStorage.setItem('cpanel_files', JSON.stringify(normalFiles));
+    localStorage.setItem('cpanel_uploaded_files', JSON.stringify(uploadedFiles));
+  }
+  function renderFileTree() {
+    fileListEl.innerHTML = '';
+    const uploadsFolderExists = Object.keys(files).some(f => f.startsWith('uploads/'));
+
+    // Create a dictionary to hold files grouped by folder
+    const fileStructure = {
+        'uploads/': []
+    };
+    for (const filename in files) {
+        if (filename.startsWith('uploads/')) {
+            fileStructure['uploads/'].push(filename);
+        } else {
+            fileStructure[filename] = files[filename]; // Treat as a direct file for now
+        }
+    }
+
+    // Render "uploads" folder if it exists
+    if (fileStructure['uploads/'].length > 0) {
+        const uploadsLi = document.createElement('li');
+        uploadsLi.innerHTML = `<i class="fas fa-folder"></i> <span>uploads/</span>`;
+        uploadsLi.style.fontWeight = '700';
+        uploadsLi.style.cursor = 'default';
+        uploadsLi.classList.add('folder');
+
+        const ul = document.createElement('ul');
+        ul.style.listStyle = 'none';
+        ul.style.paddingLeft = '0'; // Reset padding, li's will add their own
+        fileStructure['uploads/'].forEach(filename => {
+            const name = filename.slice(8);
+            const li = document.createElement('li');
+            li.tabIndex = 0;
+            if (filename === currentFile) {
+                li.classList.add('selected');
+            }
+            li.dataset.filename = filename;
+            li.innerHTML = `<i class="fas fa-file"></i> <span style="flex:1; cursor:pointer;">${name}</span>`;
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.className = 'danger-btn small-btn';
+            deleteBtn.title = `Delete uploaded file "${name}"`;
+            deleteBtn.innerHTML = `<i class="fas fa-trash-alt"></i> Delete`;
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation();
+                if (confirm(`Are you sure you want to delete "${name}"?`)) {
+                    deleteFile(filename);
+                }
+            };
+            li.appendChild(deleteBtn);
+
+            const spanName = li.querySelector('span');
+            spanName.onclick = () => loadFile(filename);
+            spanName.onkeydown = e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    loadFile(filename);
+                }
+            };
+            ul.appendChild(li);
+        });
+        uploadsLi.appendChild(ul);
+        fileListEl.appendChild(uploadsLi);
+    }
+
+    // Render normal files (outside uploads folder)
+    for (const filename in files) {
+        if (filename.startsWith('uploads/')) continue;
+        const li = document.createElement('li');
+        li.tabIndex = 0;
+        if (filename === currentFile) {
+            li.classList.add('selected');
+        }
+        li.dataset.filename = filename;
+        li.innerHTML = `<i class="fas fa-file"></i> <span style="flex:1; cursor:pointer;">${filename}</span>`;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.className = 'danger-btn small-btn';
+        deleteBtn.title = `Delete file "${filename}"`;
+        deleteBtn.innerHTML = `<i class="fas fa-trash-alt"></i> Delete`;
+        deleteBtn.onclick = (e) => {
+            e.stopPropagation();
+            if (confirm(`Are you sure you want to delete "${filename}"?`)) {
+                deleteFile(filename);
+            }
+        };
+        li.appendChild(deleteBtn);
+
+        const spanName = li.querySelector('span');
+        spanName.onclick = () => loadFile(filename);
+        spanName.onkeydown = e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                loadFile(filename);
+            }
+        };
+        fileListEl.appendChild(li);
+    }
+  }
+  function loadFile(filename) {
+    currentFile = filename;
+    filenameInput.value = filename;
+    fileTextArea.value = files[filename];
+    fileSaveInfo.textContent = '';
+    renderFileTree();
+  }
+  saveFileBtn.onclick = () => {
+    if (!currentFile) return;
+    const newFilename = filenameInput.value.trim();
+    if (!newFilename) {
+      alert('Filename cannot be empty');
+      return;
+    }
+    // Rename file if changed
+    if (newFilename !== currentFile) {
+      if (files[newFilename]) {
+        alert('A file with this name already exists.');
+        return;
+      }
+      // For uploaded files: ensure rename preserves "uploads/" folder prefix properly
+      let oldIsUpload = currentFile.startsWith('uploads/');
+      let newIsUpload = newFilename.startsWith('uploads/');
+      let finalNewFilename = newFilename;
+
+      if (oldIsUpload && !newIsUpload) {
+          // If it was an upload file and new name doesn't start with uploads/, prepend it
+          finalNewFilename = 'uploads/' + newFilename;
+      } else if (!oldIsUpload && newIsUpload) {
+          // If it was a normal file and new name starts with uploads/, remove prefix
+          finalNewFilename = newFilename.substring(8);
+      }
+      // If both are uploads/ or both are normal, then filename remains as newFilename
+
+      // Ensure that if it was an uploaded file, the new file still belongs to 'uploads/' virtual folder.
+      if (oldIsUpload && !finalNewFilename.startsWith('uploads/')) {
+        finalNewFilename = 'uploads/' + finalNewFilename;
+      }
+
+
+      delete files[currentFile];
+      currentFile = finalNewFilename;
+    }
+    files[currentFile] = fileTextArea.value;
+    saveFiles();
+    renderFileTree();
+    fileSaveInfo.textContent = 'File saved successfully.';
+  };
+
+  // Run button click event
+  runFileBtn.onclick = () => {
+    if (!currentFile) {
+      alert('No file is loaded to run.');
+      return;
+    }
+    const content = files[currentFile];
+    if (!content) {
+      alert('File content is empty.');
+      return;
+    }
+    // Only run HTML files for safety
+    if (currentFile.toLowerCase().endsWith('.html') || currentFile.toLowerCase().endsWith('.htm')) {
+      // Open new tab and write content
+      const newWindow = window.open();
+      if(newWindow) {
+        newWindow.document.open();
+        newWindow.document.write(content);
+        newWindow.document.close();
+      } else {
+        alert('Pop-up blocked. Please allow pop-ups to run this file.');
+      }
+    } else {
+      alert('You can only run HTML files in the browser.');
+    }
+  };
+
+  addFileBtn.onclick = () => {
+    let newName = prompt('Enter new filename');
+    if (!newName) return;
+    newName = newName.trim();
+    if (files[newName]) {
+      alert('File with this name already exists.');
+      return;
+    }
+    files[newName] = '';
+    saveFiles();
+    loadFile(newName);
+  };
+  function deleteFile(filename) {
+    delete files[filename];
+    saveFiles();
+    renderFileTree();
+    if (currentFile === filename) {
+      currentFile = null;
+      filenameInput.value = '';
+      fileTextArea.value = '';
+      fileSaveInfo.textContent = 'File deleted successfully.';
+    }
+  }
+
+  loadFiles();
+  renderFileTree();
+  // Load the first file in the list initially, or an empty state if no files
+  if (Object.keys(files).length > 0) {
+      loadFile(Object.keys(files)[0]);
+  } else {
+      filenameInput.value = '';
+      fileTextArea.value = '';
+      fileSaveInfo.textContent = 'No files to display. Add a new file or upload one!';
+  }
+
+
+  // FILE UPLOAD
+  const uploadForm = document.getElementById('upload-form');
+  const fileUploadInput = document.getElementById('file-upload');
+  const uploadInfo = document.getElementById('upload-info');
+
+  uploadForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const file = fileUploadInput.files[0];
+    if (!file) {
+      alert('Please select a file to upload');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const content = evt.target.result;
+      // Save to uploaded_files in localStorage
+      try {
+        const uploadedFilesStr = localStorage.getItem('cpanel_uploaded_files');
+        const uploadedFiles = uploadedFilesStr ? JSON.parse(uploadedFilesStr) : {};
+        uploadedFiles[file.name] = content;
+        localStorage.setItem('cpanel_uploaded_files', JSON.stringify(uploadedFiles));
+        // Also update files object and refresh file tree
+        files["uploads/" + file.name] = content;
+        uploadInfo.textContent = `File "${file.name}" uploaded successfully.`;
+        fileUploadInput.value = '';
+        renderFileTree();
+      } catch {
+        alert('Error saving the uploaded file.');
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  // MYSQL DATABASES SIMULATION
+  const mysqlForm = document.getElementById('mysql-form');
+  const mysqlTableBody = document.querySelector('#mysql-table tbody');
+  let mysqlDatabases = [];
+
+  function loadDatabases() {
+    try {
+      const dbs = localStorage.getItem('cpanel_mysql_dbs');
+      mysqlDatabases = dbs ? JSON.parse(dbs) : [];
+    } catch {
+      mysqlDatabases = [];
+    }
+  }
+  function saveDatabases() {
+    localStorage.setItem('cpanel_mysql_dbs', JSON.stringify(mysqlDatabases));
+  }
+  function renderDatabases() {
+    mysqlTableBody.innerHTML = '';
+    if (mysqlDatabases.length === 0) {
+        mysqlTableBody.innerHTML = '<tr><td colspan="2" style="text-align:center; color:#777;">No databases created yet.</td></tr>';
+        return;
+    }
+    mysqlDatabases.forEach((db,i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><i class="fas fa-database" style="color:#0366d6; margin-right:8px;"></i>${db}</td>
+        <td><button class="danger-btn small-btn" aria-label="Delete database ${db}"><i class="fas fa-trash-alt"></i> Delete</button></td>
+      `;
+      tr.querySelector('button').onclick = () => {
+        if(confirm('Are you sure you want to delete the database "' + db + '"?')) {
+          mysqlDatabases.splice(i, 1);
+          saveDatabases();
+          renderDatabases();
+        }
+      };
+      mysqlTableBody.appendChild(tr);
+    });
+  }
+  mysqlForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const dbName = mysqlForm['db-name'].value.trim();
+    if (!dbName) return;
+    if (mysqlDatabases.includes(dbName)) {
+      alert('Database with this name already exists.');
+      return;
+    }
+    mysqlDatabases.push(dbName);
+    saveDatabases();
+    renderDatabases();
+    mysqlForm.reset();
+  });
+  loadDatabases();
+  renderDatabases();
+
+  // SOFTWARE INSTALLATION SIMULATION
+  const softwareListEl = document.getElementById('software-list');
+  const softwareItems = [
+    {name: 'WordPress', icon: 'fab fa-wordpress', installed: false},
+    {name: 'Joomla', icon: 'fab fa-joomla', installed: false},
+    {name: 'Drupal', icon: 'fab fa-drupal', installed: false},
+    {name: 'Magento', icon: 'fas fa-store', installed: false},
+    {name: 'phpMyAdmin', icon: 'fas fa-database', installed: false}
+  ];
+  function renderSoftwareList() {
+    softwareListEl.innerHTML = '';
+    softwareItems.forEach((sw,i) => {
+      const li = document.createElement('li');
+      li.style.padding = '12px 0';
+      li.innerHTML = `
+        <div><i class="${sw.icon}" style="margin-right:10px; color:#6a737d;"></i><strong>${sw.name}</strong></div>
+        <button ${sw.installed ? 'disabled' : ''} class="primary-btn small-btn">
+          ${sw.installed ? '<i class="fas fa-check-circle"></i> Installed' : '<i class="fas fa-download"></i> Install'}
+        </button>
+      `;
+      const btn = li.querySelector('button');
+      btn.onclick = () => {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Installing...';
+        setTimeout(() => {
+          sw.installed = true;
+          renderSoftwareList();
+        }, 1500);
+      };
+      softwareListEl.appendChild(li);
+    });
+  }
+  renderSoftwareList();
+
+  // Cloudflare toggle simulation
+  const cloudflareToggle = document.getElementById('cloudflare-toggle');
+  const cloudflareStatus = document.getElementById('cloudflare-status');
+  function updateCloudflareStatus() {
+    if (cloudflareToggle.checked) {
+      cloudflareStatus.textContent = 'Cloudflare enabled for your site.';
+      cloudflareStatus.style.color = '#28a745';
+    } else {
+      cloudflareStatus.textContent = 'Cloudflare is disabled.';
+      cloudflareStatus.style.color = '#555';
+    }
+  }
+  cloudflareToggle.addEventListener('change', updateCloudflareStatus);
+  updateCloudflareStatus();
+
+  // SECURITY TOGGLES PERSISTENCE
+  const security2fa = document.getElementById('security-2fa');
+  const securityFirewall = document.getElementById('security-firewall');
+  const securityIds = document.getElementById('security-ids');
+
+  function loadSecuritySettings() {
+    try {
+      const s = localStorage.getItem('cpanel_security_settings');
+      if (s) {
+        const obj = JSON.parse(s);
+        security2fa.checked = obj.twoFA || false;
+        securityFirewall.checked = obj.firewall || false;
+        securityIds.checked = obj.ids || false;
+      }
+    } catch {}
+  }
+  function saveSecuritySettings() {
+    const obj = {
+      twoFA: security2fa.checked,
+      firewall: securityFirewall.checked,
+      ids: securityIds.checked
+    };
+    localStorage.setItem('cpanel_security_settings', JSON.stringify(obj))
+  }
+  [security2fa, securityFirewall, securityIds].forEach(elem => {
+    elem.addEventListener('change', () => {
+      saveSecuritySettings();
+    });
+  });
+  loadSecuritySettings();
+
+  // CRON JOBS SIMULATION
+  const cronForm = document.getElementById('cron-form');
+  const cronTableBody = document.querySelector('#cron-table tbody');
+  let cronJobs = [];
+
+  function loadCronJobs() {
+    try {
+      const c = localStorage.getItem('cpanel_cron_jobs');
+      cronJobs = c ? JSON.parse(c) : [];
+    } catch {
+      cronJobs = [];
+    }
+  }
+  function saveCronJobs() {
+    localStorage.setItem('cpanel_cron_jobs', JSON.stringify(cronJobs));
+  }
+  function renderCronJobs() {
+    cronTableBody.innerHTML = '';
+    if (cronJobs.length === 0) {
+        cronTableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#777;">No cron jobs added yet.</td></tr>';
+        return;
+    }
+    cronJobs.forEach((job,i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${job.schedule}</td>
+        <td>${job.command}</td>
+        <td>
+          <label class="switch" aria-label="Toggle cron job status">
+            <input type="checkbox" ${job.enabled ? 'checked' : ''} />
+            <span class="slider"></span>
+          </label>
+        </td>
+        <td><button class="danger-btn small-btn" aria-label="Delete cron job"><i class="fas fa-trash-alt"></i> Delete</button></td>
+      `;
+      // Toggle enabled state
+      const toggle = tr.querySelector('input[type=checkbox]');
+      toggle.addEventListener('change', () => {
+        cronJobs[i].enabled = toggle.checked;
+        saveCronJobs();
+      });
+      // Delete button
+      tr.querySelector('button').onclick = () => {
+        if (confirm('Delete this cron job?')) {
+          cronJobs.splice(i,1);
+          saveCronJobs();
+          renderCronJobs();
+        }
+      };
+      cronTableBody.appendChild(tr);
+    });
+  }
+  cronForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const command = cronForm['cron-command'].value.trim();
+    const schedule = cronForm['cron-schedule'].value.trim();
+    if (!command || !schedule) {
+      alert('Please fill all fields');
+      return;
+    }
+    cronJobs.push({command, schedule, enabled: true});
+    saveCronJobs();
+    renderCronJobs();
+    cronForm.reset();
+  });
+  loadCronJobs();
+  renderCronJobs();
+
+  // Email accounts simulation
+  const emailForm = document.getElementById('email-form');
+  const emailTableBody = document.querySelector('#email-table tbody');
+  let emailAccounts = [];
+
+  function loadEmails() {
+    try {
+      const e = localStorage.getItem('cpanel_email_accounts');
+      emailAccounts = e ? JSON.parse(e) : [];
+    } catch {
+      emailAccounts = [];
+    }
+  }
+  function saveEmails() {
+    localStorage.setItem('cpanel_email_accounts', JSON.stringify(emailAccounts));
+  }
+  function renderEmails() {
+    emailTableBody.innerHTML = '';
+    if (emailAccounts.length === 0) {
+        emailTableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#777;">No email accounts created yet.</td></tr>';
+        return;
+    }
+    emailAccounts.forEach((acc,i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><i class="fas fa-at" style="margin-right:8px; color:#555;"></i>${acc.email}</td>
+        <td>${acc.active ? '<span style="color:#28a745; font-weight:600;">Active</span>' : '<span style="color:#dc3545; font-weight:600;">Inactive</span>'}</td>
+        <td>
+          <button class="danger-btn small-btn" aria-label="Delete email account"><i class="fas fa-trash-alt"></i> Delete</button>
+        </td>`;
+      tr.querySelector('button').onclick = () => {
+        if (confirm('Delete this email account?')) {
+          emailAccounts.splice(i, 1);
+          saveEmails();
+          renderEmails();
+        }
+      };
+      emailTableBody.appendChild(tr);
+    });
+  }
+  emailForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const email = emailForm['email-address'].value.trim();
+    const password = emailForm['email-password'].value;
+    if (!email || !password) {
+      alert('Email and password required');
+      return;
+    }
+    if(emailAccounts.find(acc => acc.email.toLowerCase() === email.toLowerCase())) {
+      alert('Email account already exists');
+      return;
+    }
+    emailAccounts.push({email, password, active:true});
+    saveEmails();
+    renderEmails();
+    emailForm.reset();
+  });
+  loadEmails();
+  renderEmails();
+
+  // LIVE WEBSITE CODE
+
+  const liveWebsiteForm = document.getElementById('live-website-form');
+  const liveWebsiteUrlInput = document.getElementById('live-website-url');
+  const liveWebsiteInfo = document.getElementById('live-website-info');
+
+  // Load saved URL from localStorage if any
+  function loadLiveWebsiteUrl() {
+    const savedUrl = localStorage.getItem('cpanel_live_website_url');
+    if (savedUrl) {
+      liveWebsiteUrlInput.value = savedUrl;
+    }
+  }
+
+  liveWebsiteForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const url = liveWebsiteUrlInput.value.trim();
+    if (!url) {
+      alert('Please enter a valid URL.');
+      return;
+    }
+    try {
+      // Validate URL format by creating URL object (throws if invalid)
+      new URL(url);
+    } catch {
+      alert('Please enter a valid URL format, e.g. https://example.com');
+      return;
+    }
+    localStorage.setItem('cpanel_live_website_url', url);
+    liveWebsiteInfo.textContent = 'Opening live website...';
+    // Open in new tab
+    window.open(url, '_blank');
+    // Clear the info message after 3 seconds
+    setTimeout(() => liveWebsiteInfo.textContent = '', 3000);
+  });
+
+  // Initialize live website URL input on page load
+  loadLiveWebsiteUrl();
+
+</script>
+
+</body>
+</html>
+
