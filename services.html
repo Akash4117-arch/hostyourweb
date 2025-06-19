@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hostinger Style Services Menu</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary-color: #673de6;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .nav-link {
+      margin-left: 15px;
+      font-size: 16px;
+      color: #212529;
+    }
+
+    .nav-link.active {
+      color: var(--primary-color) !important;
+      font-weight: bold !important;
+    }
+
+    .brand-hosting-text {
+      color: #673de6; /* Dark blue */
+      font-weight: 700;
+      font-size: 22px;
+    }
+
+    /* Main container styling */
+    .container-main {
+      max-width: 1100px;
+      margin: 30px auto 60px;
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgb(0 0 0 / 0.1);
+    }
+
+    .section-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 50px;
+      flex-wrap: wrap;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #6b6b6b;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    ul:first-child > h3 {
+      margin-bottom: 40px;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    li strong {
+      font-weight: 700;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #111;
+    }
+
+    li .desc {
+      font-weight: 400;
+      font-size: 13px;
+      color: #666;
+      margin-left: 28px;
+      margin-top: 4px;
+      display: block;
+      max-width: 250px;
+    }
+
+    .badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      margin-left: 8px;
+    }
+
+    .ai {
+      background: #d7cfff;
+      color: #6b46c1;
+    }
+
+    .popular {
+      background: #c7def8;
+      color: #155eab;
+    }
+
+    .coming-soon {
+      background: #d2f4ee;
+      color: #0d8f85;
+    }
+
+    .icon {
+      color: #6b46c1;
+      font-size: 18px;
+      width: 22px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .section-row {
+        flex-direction: column;
+        gap: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light px-4">
+  <div class="container-fluid">
+    <!-- Logo + Brand -->
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="images/icons8-adobe-creative-cloud.gif" width="30" class="me-2" alt="logo" />
+      <span class="brand-hosting-text">Hosting</span>
+    </a>
+
+    <!-- Navigation links -->
+    <div class="d-flex align-items-center">
+      <a href="index.html" class="nav-link text-dark">Home</a>
+      <a href="Hosting.html" class="nav-link text-dark">Hosting</a>
+      <a href="pricing.html" class="nav-link text-dark">Pricing</a>
+      <a href="services.html" class="nav-link active">Services</a>
+      <a href="contact.html" class="nav-link text-dark">Contact</a>
+      <a href="login.html" class="nav-link text-dark">Login</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container-main">
+  <div class="section-row">
+    <!-- Hosting -->
+    <ul>
+      <h3>Hosting</h3>
+      <li>
+        <strong><i class="fab fa-wordpress icon"></i> Managed hosting for WordPress <span class="badge ai">AI-POWERED</span></strong>
+        <span class="desc">Optimized hosting for the world’s most popular CMS</span>
+      </li>
+      <li>
+        <strong><i class="fas fa-shopping-cart icon"></i> Managed hosting for WooCommerce</strong>
+        <span class="desc">Build and grow an ecommerce website</span>
+      </li>
+      <li>
+        <strong><i class="fas fa-server icon"></i> Web hosting</strong>
+        <span class="desc">Secure, speedy, reliable, hosting for your website</span>
+      </li>
+      <li>
+        <strong><i class="fas fa-cloud icon"></i> Cloud hosting</strong>
+        <span class="desc">Take your business to the next level with more resources</span>
+      </li>
+      <li>
+        <strong><i class="fas fa-layer-group icon"></i> Agency hosting</strong>
+        <span class="desc">Designed for professionals and agencies</span>
+      </li>
+    </ul>
+
+    <!-- Websites + VPS -->
+    <ul>
+      <h3>Websites</h3>
+      <li>
+        <strong><i class="fas fa-puzzle-piece icon"></i> Website Builder <span class="badge ai">AI-POWERED</span></strong>
+        <span class="desc">Create a site or an online store in 3 easy steps</span>
+      </li>
+      <li>
+        <strong><i class="fas fa-store icon"></i> Ecommerce Website Builder <span class="badge ai">AI-POWERED</span></strong>
+        <span class="desc">Get straight to business with an online store</span>
+      </li>
+      <li>
+        <strong><i class="fas fa-water icon"></i> Horizons <span class="badge ai">AI-POWERED</span></strong>
+        <span class="desc">Build a custom no-code website or web app in minutes</span>
+      </li>
+      <h3>VPS</h3>
+      <li>
+        <strong><i class="fas fa-database icon"></i> VPS hosting</strong>
+        <span class="desc">Get a powerful KVM-based server</span>
+      </li>
+      <li>
+        <strong><i class="fas fa-robot icon"></i> n8n VPS hosting <span class="badge popular">POPULAR</span></strong>
+        <span class="desc">Open-source n8n for AI workflow automation</span>
+      </li>
+    </ul>
+
+    <!-- Domains + Email -->
+    <ul>
+      <h3>Domains</h3>
+      <li>
+        <strong><i class="fas fa-globe icon"></i> Domain name search <span class="badge ai">AI-POWERED</span></strong>
+        <span class="desc">Find and register your website address</span>
+      </li>
+      <li>
+        <strong><i class="fas fa-exchange-alt icon"></i> Domain transfer</strong>
+        <span class="desc">Already have a domain? Transfer it to Hostinger.</span>
+      </li>
+      <h3>Email</h3>
+      <li>
+        <strong><i class="fas fa-bullseye icon"></i> Hostinger Reach <span class="badge coming-soon">COMING SOON</span></strong>
+        <span class="desc">Create and send email campaigns with AI</span>
+      </li>
+      <li>
+        <strong><i class="fas fa-envelope icon"></i> Business email</strong>
+        <span class="desc">Build your brand with professional email addresses</span>
+      </li>
+      <li>
+        <strong><i class="fab fa-google icon"></i> Google Workspace</strong>
+        <span class="desc">Transform teamwork and boost productivity</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
