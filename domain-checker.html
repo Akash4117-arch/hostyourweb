@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Domain Availability Checker</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .navbar {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+  }
+
+  .nav-link {
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+
+  .nav-link:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+
+  .container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    padding: 2.5rem 3rem;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    animation: fadeInUp 1s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  h1 {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 2rem;
+    letter-spacing: 1px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+  }
+
+  button {
+    width: 100%;
+    padding: 0.85rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4a90e2;
+    background: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  button:hover {
+    background: #f0f0f0;
+    transform: scale(1.03);
+  }
+
+  .result {
+    margin-top: 1.25rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    min-height: 1.5rem;
+    transition: color 0.3s ease;
+  }
+
+  .available {
+    color: #50e388;
+  }
+
+  .unavailable {
+    color: #e94e77;
+  }
+
+  .error {
+    color: #f5a623;
+  }
+
+  .info {
+    font-size: 0.9rem;
+    color: #d0f0ffcc;
+    margin-top: 0.5rem;
+  }
+
+  a.external-link {
+    color: #fff;
+    text-decoration: underline;
+    margin-top: 1rem;
+    display: inline-block;
+  }
+</style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="billing.html" class="nav-link">Back</a>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container">
+    <h1>Domain Availability Checker</h1>
+    <input type="text" id="domainInput" placeholder="Enter domain name (example.com)" />
+    <button id="checkBtn">Check Availability</button>
+    <div id="result" class="result"></div>
+    <button id="continueBtn" style="display: none; margin-top: 1rem;">Continue with Payment</button>
+    <div class="info">
+      * Real domain availability checks require backend or API access.<br />
+      This demo fakes availability status for illustrative purposes.
+    </div>
+    <a href="https://www.whois.com/whois/" target="_blank" rel="noopener" class="external-link">Check on WHOIS.com</a>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const domainPattern = /^[a-z0-9-]+(\.[a-z0-9-]+)+$/i;
+    const domainInput = document.getElementById('domainInput');
+    const checkBtn = document.getElementById('checkBtn');
+    const resultDiv = document.getElementById('result');
+    const continueBtn = document.getElementById('continueBtn');
+
+    function fakeAvailability(domain) {
+      let hash = 0;
+      for(let i = 0; i < domain.length; i++) {
+        hash = (hash << 5) - hash + domain.charCodeAt(i);
+        hash |= 0;
+      }
+      return (hash % 2 === 0);
+    }
+
+    checkBtn.addEventListener('click', () => {
+      const domain = domainInput.value.trim().toLowerCase();
+      resultDiv.textContent = '';
+      resultDiv.className = 'result';
+      continueBtn.style.display = 'none';
+
+      if (!domain) {
+        resultDiv.textContent = 'Please enter a domain name.';
+        resultDiv.classList.add('error');
+        return;
+      }
+
+      if (!domainPattern.test(domain)) {
+        resultDiv.textContent = 'Please enter a valid domain name.';
+        resultDiv.classList.add('error');
+        return;
+      }
+
+      if (domain.lastIndexOf('.') === -1) {
+        resultDiv.textContent = 'Please enter a domain with extension, e.g. example.com';
+        resultDiv.classList.add('error');
+        return;
+      }
+
+      resultDiv.textContent = 'Checking domain availability...';
+
+      setTimeout(() => {
+        const available = fakeAvailability(domain);
+        if (available) {
+          resultDiv.textContent = `${domain} appears to be available!`;
+          resultDiv.classList.add('available');
+          continueBtn.style.display = 'block';
+        } else {
+          resultDiv.textContent = `${domain} is NOT available.`;
+          resultDiv.classList.add('unavailable');
+          continueBtn.style.display = 'none';
+        }
+      }, 800);
+    });
+
+    continueBtn.addEventListener('click', () => {
+      window.location.href = 'payment.html'; // Redirect to payment page
+    });
+  </script>
+</body>
+</html>

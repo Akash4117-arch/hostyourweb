@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Basic Web Hosting - Your Cart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f5f6ff;
+      margin: 0;
+      padding: 20px;
+      color: #2e1f52;
+    }
+
+    h2 {
+      text-align: left;
+      font-size: 28px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+    }
+
+    .promo-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #7b3af0;
+      color: #fff;
+      padding: 15px 30px;
+      border-radius: 20px;
+      font-weight: 600;
+      box-shadow: 0 10px 20px rgba(123, 58, 240, 0.3);
+      font-size: 16px;
+    }
+
+    .timer {
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .container {
+      display: flex;
+      gap: 30px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      flex: 1;
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+      min-width: 300px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    .price {
+      font-size: 26px;
+      font-weight: 700;
+      margin-top: 20px;
+      color: #2e1f52;
+    }
+
+    .strike {
+      text-decoration: line-through;
+      color: #999;
+      margin-top: 4px;
+    }
+
+    .discount-badge {
+      background: #00c58b;
+      color: white;
+      font-weight: 600;
+      padding: 10px;
+      display: inline-block;
+      margin-top: 10px;
+      border-radius: 999px;
+    }
+
+    .highlight {
+      margin-top: 20px;
+      background: #e6fdf2;
+      color: #0c6c47;
+      font-weight: 500;
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    .subtotal {
+      font-size: 28px;
+      font-weight: 700;
+      color: #2e1f52;
+      margin-top: 10px;
+    }
+
+    .summary {
+      font-size: 14px;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    .discount {
+      color: #10b981;
+      font-weight: 600;
+      margin-top: 15px;
+    }
+
+    .continue-btn {
+      display: block;
+      background: #7b3af0;
+      color: white;
+      text-align: center;
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: 600;
+      margin-top: 25px;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .continue-btn:hover {
+      background: #682de0;
+      transform: scale(1.03);
+    }
+
+    .guarantee {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="promo-banner">
+    <div class="timer" id="timer">00 : 20 : 00</div>
+    <div class="text">+ 3 months free with a 48–month plan</div>
+  </div>
+
+  <h2>Your cart</h2>
+
+  <div class="container">
+    <div class="card">
+      <div class="section-title">Basic Web Hosting</div>
+      <label for="period">Period</label>
+      <select id="period">
+        <option value="1">1 month</option>
+        <option value="12">12 months</option>
+        <option value="24">24 months</option>
+        <option value="48" selected>48 months</option>
+      </select>
+
+      <div class="price" id="price">₹99.00/month</div>
+      <div class="strike" id="original">₹199.00/month</div>
+      <div class="discount-badge" id="savings">SAVE ₹4,800.00</div>
+      <div class="highlight">Great news! Your <b>FREE</b> domain + 3 months <b>FREE</b> are included.</div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Subtotal</div>
+      <div class="strike" id="original-total">₹9,552.00</div>
+      <div class="subtotal" id="subtotal">₹4,752.00</div>
+      <div class="summary">Subtotal does not include applicable taxes</div>
+      <div class="discount" id="discount-detail">Discount -50%<br>−₹4,800.00</div>
+      <a href="register.html" class="continue-btn">Continue</a>
+      <div class="guarantee">💡 30-day money–back guarantee</div>
+    </div>
+  </div>
+
+  <script>
+    let totalSeconds = 60 * 60;
+    const timerEl = document.getElementById("timer");
+
+    function updateTimer() {
+      const m = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+      const s = String(totalSeconds % 60).padStart(2, '0');
+      timerEl.textContent = `00 : ${m} : ${s}`;
+      if (totalSeconds > 0) setTimeout(updateTimer, 1000);
+      totalSeconds--;
+    }
+    updateTimer();
+
+    const pricing = {
+      1: { monthly: 149, originalMonthly: 149, discount: 0 },
+      12: { monthly: 129, originalMonthly: 199, discount: 840 },
+      24: { monthly: 109, originalMonthly: 199, discount: 2160 },
+      48: { monthly: 99, originalMonthly: 199, discount: 4800 },
+    };
+
+    const periodSelect = document.getElementById("period");
+    const priceEl = document.getElementById("price");
+    const originalEl = document.getElementById("original");
+    const savingsEl = document.getElementById("savings");
+    const subtotalEl = document.getElementById("subtotal");
+    const originalTotalEl = document.getElementById("original-total");
+    const discountDetailEl = document.getElementById("discount-detail");
+
+    periodSelect.addEventListener("change", () => {
+      const months = parseInt(periodSelect.value);
+      const data = pricing[months];
+      const total = months * data.monthly;
+      const originalTotal = months * data.originalMonthly;
+      priceEl.textContent = `₹${data.monthly}.00/month`;
+      originalEl.textContent = `₹${data.originalMonthly}.00/month`;
+      savingsEl.textContent = data.discount > 0 ? `SAVE ₹${data.discount.toLocaleString()}.00` : '';
+      savingsEl.style.display = data.discount > 0 ? 'inline-block' : 'none';
+      subtotalEl.textContent = `₹${total.toLocaleString()}.00`;
+      originalTotalEl.textContent = `₹${originalTotal.toLocaleString()}.00`;
+      const percent = data.discount > 0 ? Math.round((data.discount / originalTotal) * 100) : 0;
+      discountDetailEl.innerHTML = data.discount > 0 ? `Discount -${percent}%<br>−₹${data.discount.toLocaleString()}.00` : '';
+    });
+
+    periodSelect.dispatchEvent(new Event("change"));
+  </script>
+</body>
+</html>

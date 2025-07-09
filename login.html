@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Start Learning - Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: #f8f8f6;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .main-container {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.05);
+      padding: 30px;
+      max-width: 1000px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .left-box {
+      width: 45%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .left-box img.logo {
+      height: 40px;
+      margin-bottom: 80px;
+      margin-top: 10px;
+    }
+
+    .illustration {
+      width: 100%;
+    }
+
+    .illustration img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .form-box {
+      width: 55%;
+    }
+
+    .form-box h2 {
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-box p {
+      color: #888;
+      margin-bottom: 30px;
+    }
+
+    .form-control {
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .btn-orange {
+      background-color: #f26a2e;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-weight: bold;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .btn-orange:hover {
+      background-color: #e95d1d;
+    }
+
+    .google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 12px;
+      width: 100%;
+      background: white;
+      margin-top: 10px;
+      font-weight: bold;
+      gap: 10px;
+    }
+
+    .google-btn img {
+      height: 18px;
+    }
+
+    .login-link {
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: center;
+      color: #666;
+    }
+
+    .login-link a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .insta-logo {
+      margin-left: 90px;
+      height: 30px;
+      cursor: pointer;
+       margin-left: 0; /* Remove extra spacing */
+    }
+
+    @media (max-width: 768px) {
+      .main-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .left-box img.logo {
+        height: 40px;
+        margin-bottom: 80px;
+        margin-top: -60px; /* Move logo upwards */
+       }
+
+      .left-box {
+        margin-bottom: 20px;
+      }
+
+      .left-box img.logo {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <!-- Left section -->
+    <div class="left-box">
+     <div style="display: flex; align-items: center; gap: 10px; margin-top: -120px;">
+        <img src="images/icons8-adobe-creative-cloud.gif" alt="Logo" class="logo">
+        <span style="color: red; font-weight: bold; font-size: 20px; margin-top: -80px; display: inline-block;">Hosting.</span>
+      </div>
+
+      <div class="illustration">
+        <img src="images/woman-programmer-working-on-a-new-project-free-vector.jpg" alt="Learning Illustration">
+      </div>
+    </div>
+
+    <!-- Right Login Form -->
+    <div class="form-box">
+       <h2>
+         Let's Start Learning
+        <div style="display: flex; gap: 8px; align-items: right; margin-left: auto;">
+        <img src="images/icons8-instagram-logo-24.png" alt="Instagram Logo" class="insta-logo">
+         <img src="images/icons8-telegram-48.png" alt="Telegram Logo" class="insta-logo">
+       </div>
+     </h2>
+      <p>Please login or sign up to continue</p>
+
+      
+         <form action="loginservlet" method="post" style="width: 100%; max-width: 320px;">
+          <div class="form-group-box" style="background: #f5f5f5; border-radius: 12px; padding: 20px; width: 100%;">
+    <!-- UserID Container -->
+          <div class="form-input-box" style="margin-bottom: 15px;">
+               <label for="UserID" style="font-weight: 500; margin-bottom: 5px; display: block;">User ID</label>
+               <div class="position-relative">
+               <i class="bi bi-person-fill" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); color: #888;"></i>
+               <input type="text" name="UserID" id="UserID" class="form-control" placeholder="Enter your UserID" required style="padding-left: 35px;">
+             </div>
+            </div>
+         
+
+    <!-- Password Container -->
+           <div class="form-input-box">
+             <label for="Password" style="font-weight: 500; margin-bottom: 5px; display: block;">Password</label>
+             <div class="position-relative">
+             <i class="bi bi-lock-fill" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); color: #888;"></i>
+             <input type="password" name="Password" id="Password" class="form-control" placeholder="Enter your Password" required style="padding-left: 35px;">
+           </div>
+       </div>
+       </div>
+
+  <!-- Sign Up Button -->
+          <button type="submit" class="btn btn-orange mt-3" style="max-width: 320px; margin: 10px auto 0; display: block;">Login</button>
+
+  <!-- Google Sign In -->
+           <button type="button" class="google-btn" style="max-width: 320px; margin: 10px auto 0;">
+            <img src="images/icons8-google-logo-48.png" alt="Google Logo">
+               Sign in with Google
+              </button>
+
+  <!-- Already have account -->
+              <p class="login-link">
+                 Already have an account? <a href="#">Login</a>
+                 </p>
+          </form>  
+
+    </div>
+  </div>
+</body>
+</html>

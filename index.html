@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hosting - Hostinger Style</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary-color: #673de6;
+      --light-color: #f8f9fa;
+      --dark-color: #1a1a1a;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+
+    .navbar {
+      background-color: white;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 26px;
+      color: var(--primary-color);
+    }
+
+    .navbar .nav-link {
+      color: #333;
+      transition: color 0.3s ease;
+    }
+
+    .navbar .nav-link.active {
+      font-weight: bold;
+    }
+
+    /* Specific override for Home link */
+    .navbar .nav-link.active[href="index.html"] {
+      color: blue !important;
+      font-weight: bold;
+    }
+
+    .hero {
+      background-color: var(--light-color);
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
+
+    .hero .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      padding: 12px 30px;
+      font-size: 1.1rem;
+    }
+
+    .feature-img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.15));
+      margin-bottom: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-img:hover {
+      transform: scale(1.1);
+    }
+
+    .card {
+      border: none;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .card h5 {
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .card img.plan-icon {
+      width: 50px;
+      margin-bottom: 10px;
+    }
+
+    .testimonial img {
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      box-shadow: 0 0 0 4px var(--primary-color);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .testimonial img:hover {
+      transform: scale(1.1);
+    }
+
+    footer {
+      background-color: #111;
+      color: white;
+    }
+
+    footer a {
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: white;
+    }
+
+    .social-icons img {
+      width: 28px;
+      height: 28px;
+      margin: 0 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .social-icons img:hover {
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header/Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="images/icons8-adobe-creative-cloud.gif" width="30" class="me-2" alt="logo" />
+      Hosting
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="Hosting.html">Hosting</a></li>
+        <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
+        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="py-5 hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center text-md-start" data-aos="fade-right">
+        <h1 class="mb-3">Launch Your Website Today</h1>
+        <p class="mb-4">Fast, secure, and scalable hosting solutions for everyone</p>
+        <a href="launch.html" class="btn btn-lg btn-primary">Get Started</a>
+      </div>
+      <div class="col-md-6 text-center" data-aos="fade-left">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=700&q=80"
+          alt="Hero Image" class="img-fluid rounded shadow" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 text-center" id="features">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4" data-aos="fade-up">
+        <img src="https://cdn-icons-png.flaticon.com/512/2088/2088617.png" alt="Speed" class="feature-img" />
+        <h4>Fast Performance</h4>
+        <p>Ultra-fast loading times and 99.9% uptime guaranteed.</p>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <img src="https://cdn-icons-png.flaticon.com/512/942/942748.png" alt="Security" class="feature-img" />
+        <h4>Secure Hosting</h4>
+        <p>Advanced protection with free SSL, backups, and DDoS mitigation.</p>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <img src="https://cdn-icons-png.flaticon.com/512/893/893292.png" alt="Support" class="feature-img" />
+        <h4>24/7 Support</h4>
+        <p>Dedicated support team ready to assist you any time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Hosting Plans -->
+<section class="py-5 bg-light" id="plans">
+  <div class="container">
+    <h2 class="text-center mb-5">Choose Your Plan</h2>
+    <div class="row">
+      <div class="col-md-4" data-aos="fade-up">
+        <div class="card p-4">
+          <img src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png" class="plan-icon" alt="Basic Icon" />
+          <h5>Basic</h5>
+          <p class="text-muted">$2.99/month</p>
+          <ul class="list-unstyled">
+            <li>1 Website</li>
+            <li>10 GB Storage</li>
+            <li>Free SSL</li>
+          </ul>
+       <a href="basic.html" class="btn btn-outline-primary">Select Plan</a>
+
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="card p-4">
+          <img src="https://cdn-icons-png.flaticon.com/512/833/833314.png" class="plan-icon" alt="Standard Icon" />
+          <h5>Standard</h5>
+          <p class="text-muted">$5.99/month</p>
+          <ul class="list-unstyled">
+            <li>5 Websites</li>
+            <li>50 GB Storage</li>
+            <li>Free Domain</li>
+          </ul>
+          <a href="standard.html" class="btn btn-outline-primary">Select Plan</a>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="card p-4">
+          <img src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png" class="plan-icon" alt="Premium Icon" />
+          <h5>Premium</h5>
+          <p class="text-muted">$9.99/month</p>
+          <ul class="list-unstyled">
+            <li>Unlimited Websites</li>
+            <li>Unlimited Storage</li>
+            <li>Premium Support</li>
+          </ul>
+          <a href="primium.html" class="btn btn-outline-primary">Select Plan</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-5" id="testimonials">
+  <div class="container">
+    <h2 class="text-center mb-5">What Our Customers Say</h2>
+    <div class="row g-4">
+      <div class="col-md-4" data-aos="fade-right">
+        <div class="card p-4 testimonial text-center border-0 shadow-sm">
+          <a href="https://www.google.com/search?q=Sarah+W." target="_blank" rel="noopener noreferrer">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User 1" />
+          </a>
+          <p class="mt-3 fst-italic">
+            “Fantastic hosting with lightning-fast speeds. My website has never been smoother!”
+          </p>
+          <h6 class="fw-bold">Sarah W.</h6>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up">
+        <div class="card p-4 testimonial text-center border-0 shadow-sm">
+          <a href="https://www.google.com/search?q=John+D." target="_blank" rel="noopener noreferrer">
+            <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="User 2" />
+          </a>
+          <p class="mt-3 fst-italic">
+            “Great value and amazing customer support. Highly recommend for small businesses.”
+          </p>
+          <h6 class="fw-bold">John D.</h6>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-left">
+        <div class="card p-4 testimonial text-center border-0 shadow-sm">
+          <a href="https://www.google.com/search?q=Emily+R." target="_blank" rel="noopener noreferrer">
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="User 3" />
+          </a>
+          <p class="mt-3 fst-italic">
+            “User-friendly and reliable hosting with excellent uptime. Perfect for my blog!”
+          </p>
+          <h6 class="fw-bold">Emily R.</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-4 mt-5">
+  <div class="container text-center">
+    <p>© 2025 Hosting. All rights reserved.</p>
+    <div class="social-icons mt-2">
+      <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" />
+      </a>
+      <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" />
+      </a>
+      <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram" />
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+</body>
+</html>

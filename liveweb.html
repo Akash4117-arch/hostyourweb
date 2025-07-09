@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mini Hosting Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-500 to-purple-600 min-h-screen flex items-center justify-center text-white">
+
+    <div class="bg-white text-gray-800 shadow-lg rounded-xl p-8 w-full max-w-md fade-in-up">
+        <h2 class="text-2xl font-bold mb-6 text-center text-indigo-600">🚀 Upload Your Website</h2>
+
+        <form action="UploadServlet2" method="post" enctype="multipart/form-data" class="space-y-4">
+            <div>
+                <label class="block text-sm font-semibold mb-1">Site Name</label>
+                <input type="text" name="siteName" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold mb-1">Upload ZIP File</label>
+                <input type="file" name="folderZip" accept=".zip" required class="w-full p-2 border border-gray-300 rounded-md bg-white file:cursor-pointer file:rounded-md file:border-0 file:bg-indigo-100 file:text-indigo-800">
+            </div>
+
+            <div class="text-center">
+                <input type="submit" value="Upload & Host"
+                    class="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition duration-300 ease-in-out cursor-pointer">
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f3ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .register-container {
+      background-color: #fff;
+      padding: 40px 30px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    .back-link {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 16px;
+      color: #5a28f4;
+      text-decoration: none;
+    }
+
+    h2 {
+      font-size: 32px;
+      color: #2c1e5f;
+      margin-bottom: 30px;
+    }
+
+    .google-btn {
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 16px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+
+    .google-btn img {
+      height: 20px;
+      margin-right: 10px;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 20px 0;
+      color: #999;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .divider:not(:empty)::before {
+      margin-right: .5em;
+    }
+
+    .divider:not(:empty)::after {
+      margin-left: .5em;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      border: 1.5px solid #ccc;
+      font-size: 16px;
+    }
+
+    .password-field {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 18px;
+      color: #999;
+    }
+
+    .register-btn {
+      background-color: #784ffe;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .login-link {
+      margin-top: 16px;
+      font-size: 14px;
+    }
+
+    .login-link a {
+      color: #5a28f4;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .terms {
+      font-size: 12px;
+      color: #777;
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+
+    .terms a {
+      color: #2c1e5f;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+  </style>
+</head>
+<body>
+
+  <a href="checkout.html" class="back-link">← Back</a>
+
+  <div class="register-container">
+    <h2>Register</h2>
+
+    <div class="google-btn">
+      <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google">
+      Continue with Google
+    </div>
+
+    <div class="divider">or</div>
+
+    <form action="RegisterServlet" method="POST">
+      
+      <input type="email" name="email" placeholder="Email address" required>
+      
+
+      <div class="password-field">
+        <input type="password" name="password" placeholder="Password" id="password" required>
+        <span class="password-toggle" onclick="togglePassword()">👁️</span>
+      </div>
+
+      <button type="submit" class="register-btn">Register</button>
+    </form>
+
+    <div class="login-link">
+      Already have an account? <a href="#">Log in</a>
+    </div>
+
+    <div class="terms">
+      By continuing you agree with our <a href="#">Terms of Service</a> and confirm that you have read our <a href="#">Privacy Policy</a>.
+    </div>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const input = document.getElementById('password');
+      if (input.type === "password") {
+        input.type = "text";
+      } else {
+        input.type = "password";
+      }
+    }
+  </script>
+
+</body>
+</html>

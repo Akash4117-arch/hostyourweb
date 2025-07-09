@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment Page</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f9fc;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      display: flex;
+      max-width: 1000px;
+      margin: auto;
+      gap: 20px;
+    }
+    .card-section, .summary-section {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 20px;
+      flex: 1;
+    }
+    .card-section h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .form-row {
+      display: flex;
+      gap: 10px;
+    }
+    .pay-btn {
+      width: 100%;
+      background-color: #84cc16;
+      border: none;
+      padding: 12px;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .order-summary h3 {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+    }
+    .total {
+      font-weight: bold;
+      font-size: 20px;
+      color: #7e22ce;
+      border-top: 1px solid #ddd;
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+    .payment-logos img {
+      height: 28px;
+      margin-right: 8px;
+    }
+    .secure {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #333;
+    }
+    .secure-icon {
+      background-color: #4ade80;
+      color: white;
+      border-radius: 50%;
+      padding: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head> 
+<body>
+
+<div class="container">
+  <!-- Payment Card Form -->
+  <div class="card-section">
+    <h2>Continue payment via Card</h2>
+    <div style="text-align:center; margin-bottom: 20px;">
+      <img src="images/in-visa-platinum-card-498x280.webp" alt="Card Preview" style="width: 100%; max-width: 300px;" />
+    </div>
+
+    <!-- FORM posting to PayServlet -->
+    <form action="PayServlet" method="post">
+      <div class="form-group">
+        <label>Name on card</label>
+        <input type="text" name="card_name" placeholder="Your name" required />
+      </div>
+      <div class="form-group">
+        <label>Card number</label>
+        <input type="tel" name="card_number" placeholder="0000 0000 0000 0000" required />
+      </div>
+      <div class="form-row">
+        <div class="form-group" style="flex:1;">
+          <label>Expiry date</label>
+          <input type="text" name="expiry" placeholder="MM / YY" required />
+        </div>
+        <div class="form-group" style="flex:1;">
+          <label>CVC/CVV</label>
+          <input type="text" name="cvv" placeholder="CVC/CVV" required />
+        </div>
+      </div>
+
+      <!-- Hidden amount value -->
+      <input type="hidden" name="amount" value="8439.36" />
+
+      <button class="pay-btn" type="submit">PAY NOW</button>
+    </form>
+  </div>
+
+  <!-- Order Summary -->
+  <div class="summary-section order-summary">
+    <h3>Order Summary</h3>
+    <div class="summary-item">
+      <span>Receipt ID:</span>
+      <span>hb_30949005</span>
+    </div>
+    <div class="summary-item">
+      <span>Premium Web Hosting (billed every 4 years)</span>
+      <span>₹7,152.00</span>
+    </div>
+    <div class="summary-item">
+      <span>GST 18%</span>
+      <span>₹1,287.36</span>
+    </div>
+    <div class="summary-item">
+      <span>Credits</span>
+      <span>₹0.00</span>
+    </div>
+    <div class="summary-item total">
+      <span>Total</span>
+      <span>₹8,439.36</span>
+    </div>
+    <div class="payment-logos" style="margin-top: 15px;">
+      <img src="https://img.icons8.com/color/48/visa.png" alt="Visa"/>
+      <img src="https://img.icons8.com/color/48/mastercard.png" alt="MasterCard"/>
+      <img src="https://img.icons8.com/color/48/amex.png" alt="Amex"/>
+      <img src="https://img.icons8.com/color/48/maestro.png" alt="Maestro"/>
+      <img src="https://img.icons8.com/color/48/rupay.png" alt="Rupay"/>
+    </div>
+    <div class="secure">
+      <div class="secure-icon">✔</div>
+      <div>
+        <strong>SSL Secure payment</strong><br/>
+        Your encryption is protected by 256-bit SSL encryption
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

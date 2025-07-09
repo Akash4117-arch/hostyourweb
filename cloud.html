@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cloud Hosting Services</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f4f7fc;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0066cc, #00ccff);
+      color: white;
+      text-align: center;
+      padding: 140px 30px 100px;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 0.3em;
+      font-weight: 700;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin: 0 auto 2.5em;
+    }
+    .btn-primary {
+      background: #ff6600;
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 48px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255,102,0,0.5);
+      transition: background 0.3s ease;
+    }
+    .btn-primary:hover {
+      background: #e65c00;
+      box-shadow: 0 8px 30px rgba(230,92,0,0.6);
+    }
+
+    section.features {
+      max-width: 1200px;
+      margin: 80px auto 40px;
+      padding: 0 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      text-align: center;
+    }
+
+    .feature {
+      background: white;
+      padding: 30px 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+    .feature:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 30px rgba(0,0,0,0.15);
+    }
+    .feature-icon {
+      font-size: 48px;
+      color: #0066cc;
+      margin-bottom: 20px;
+    }
+    .feature h3 {
+      margin-bottom: 12px;
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+    .feature p {
+      color: #666;
+    }
+
+    section.pricing {
+      background: #e9f5ff;
+      padding: 80px 30px 100px;
+    }
+    .pricing-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      text-align: center;
+    }
+    .pricing-plan {
+      background: white;
+      padding: 40px 20px;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: box-shadow 0.3s ease;
+      cursor: default;
+    }
+    .pricing-plan:hover {
+      box-shadow: 0 22px 50px rgba(0,0,0,0.18);
+    }
+    .plan-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #003366;
+    }
+    .plan-price {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #ff6600;
+      margin-bottom: 16px;
+    }
+    .plan-duration {
+      font-weight: 500;
+      color: #666;
+      margin-bottom: 24px;
+    }
+    .plan-features {
+      text-align: left;
+      margin-bottom: 32px;
+      padding-left: 0;
+      list-style: none;
+      color: #555;
+      font-weight: 500;
+    }
+    .plan-features li {
+      margin-bottom: 10px;
+      padding-left: 20px;
+      position: relative;
+    }
+    .plan-features li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #00bbff;
+      font-weight: 700;
+    }
+    .btn-secondary {
+      padding: 14px 20px;
+      border-radius: 40px;
+      background: #0066cc;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .btn-secondary:hover {
+      background: #004a99;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+      section.features {
+        grid-template-columns: 1fr;
+        margin: 60px auto 40px;
+      }
+      .pricing-container {
+        grid-template-columns: 1fr;
+        max-width: 380px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <h1>Reliable Cloud Hosting for Your Business</h1>
+    <p>Scale effortlessly with high-performance servers, global data centers & 99.99% uptime guarantee.</p>
+    <button class="btn-primary">Get Started Now</button>
+  </section>
+
+  <section class="features" id="features">
+    <div class="feature">
+      <div class="feature-icon">☁️</div>
+      <h3>Scalable Infrastructure</h3>
+      <p>Easily scale your resources up or down to meet your business demands with our flexible cloud infrastructure.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔒</div>
+      <h3>Secure & Compliant</h3>
+      <p>Keep your data safe with our enterprise-grade security and compliance certifications.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <h3>High Performance</h3>
+      <p>Enjoy ultra-fast servers and SSD storage that ensures speed and reliability for your applications.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🌍</div>
+      <h3>Global Network</h3>
+      <p>Serve your customers better with our worldwide network of data centers and edge locations.</p>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <h2 style="text-align: center; font-weight: 700; color: #003366; margin-bottom: 48px;">Flexible Pricing Plans</h2>
+    <div class="pricing-container">
+      <div class="pricing-plan">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">$9</div>
+        <div class="plan-duration">per month</div>
+        <ul class="plan-features">
+          <li>1 vCPU</li>
+          <li>1 GB RAM</li>
+          <li>50 GB SSD Storage</li>
+          <li>1 TB Bandwidth</li>
+        </ul>
+        <button class="btn-secondary">Choose Plan</button>
+      </div>
+      <div class="pricing-plan">
+        <div class="plan-name">Business</div>
+        <div class="plan-price">$29</div>
+        <div class="plan-duration">per month</div>
+        <ul class="plan-features">
+          <li>4 vCPU</li>
+          <li>8 GB RAM</li>
+          <li>200 GB SSD Storage</li>
+          <li>5 TB Bandwidth</li>
+        </ul>
+        <button class="btn-secondary">Choose Plan</button>
+      </div>
+      <div class="pricing-plan">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price">$99</div>
+        <div class="plan-duration">per month</div>
+        <ul class="plan-features">
+          <li>16 vCPU</li>
+          <li>64 GB RAM</li>
+          <li>1 TB SSD Storage</li>
+          <li>Unlimited Bandwidth</li>
+        </ul>
+        <button class="btn-secondary">Choose Plan</button>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
+
